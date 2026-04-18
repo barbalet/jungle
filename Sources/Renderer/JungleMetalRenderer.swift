@@ -77,6 +77,8 @@ public final class JungleMetalRenderer: NSObject, MTKViewDelegate {
         ),
     ]
 
+    private static let debugLayerLiftMultiplier: Float = 5.0
+
     private static let shaderSource = """
     #include <metal_stdlib>
     using namespace metal;
@@ -476,11 +478,7 @@ public final class JungleMetalRenderer: NSObject, MTKViewDelegate {
             )
             var color = mix(lowColor, highColor, t: blend * 0.55)
             color = applyContrast(color, amount: 1.10 + density * 0.18, pivot: 0.41)
-            let alpha = simd_clamp(
-                density * layer.alphaScale * (0.88 + sample.groundCover * 0.26),
-                0.0,
-                0.78
-            )
+            let alpha = layerAlpha(for: sample, layer: layer.kind, density: density)
             return SIMD4<Float>(color.x, color.y, color.z, alpha)
         case .midstory:
             let lowColor = materialColor(snapshot.waistMaterial, wetness: wetness)
@@ -491,11 +489,7 @@ public final class JungleMetalRenderer: NSObject, MTKViewDelegate {
             )
             var color = mix(lowColor, highColor, t: blend * 0.72)
             color = applyContrast(color, amount: 1.14 + density * 0.20, pivot: 0.40)
-            let alpha = simd_clamp(
-                density * layer.alphaScale * (0.82 + sample.waist * 0.24 + sample.head * 0.18),
-                0.0,
-                0.70
-            )
+            let alpha = layerAlpha(for: sample, layer: layer.kind, density: density)
             return SIMD4<Float>(color.x, color.y, color.z, alpha)
         case .canopy:
             let lowColor = materialColor(snapshot.headMaterial, wetness: wetness)
@@ -506,11 +500,7 @@ public final class JungleMetalRenderer: NSObject, MTKViewDelegate {
             )
             var color = mix(lowColor, highColor, t: 0.32 + blend * 0.68)
             color = applyContrast(color, amount: 1.18 + density * 0.22, pivot: 0.39)
-            let alpha = simd_clamp(
-                density * layer.alphaScale * (0.86 + sample.canopy * 0.22),
-                0.0,
-                0.62
-            )
+            let alpha = layerAlpha(for: sample, layer: layer.kind, density: density)
             return SIMD4<Float>(color.x, color.y, color.z, alpha)
         }
     }
@@ -578,7 +568,11 @@ public final class JungleMetalRenderer: NSObject, MTKViewDelegate {
         )
         let lateralAmount = simd_dot(sampleDirection, right)
         let baseHeight = layerBaseHeight(for: layer.kind) * layer.heightScale
-        let verticalLift = baseHeight * (0.38 + density * 0.62) + max(relief, -0.35) * baseHeight * 0.12
+        let verticalLift =
+            (
+                baseHeight * (0.38 + density * 0.62) +
+                    max(relief, -0.35) * baseHeight * 0.12
+            ) * Self.debugLayerLiftMultiplier
         let depthOffset = -forward * layer.parallaxDepth * (0.24 + density * 0.76)
         let lateralOffset = right * lateralAmount * layer.lateralDrift * (0.20 + density * 0.80)
 
@@ -628,6 +622,99 @@ public final class JungleMetalRenderer: NSObject, MTKViewDelegate {
         }
 
         return simd_clamp(primary / total, 0.0, 1.0)
+    }
+
+    private func layerAlpha(for sample: JungleTerrainSample, layer: TerrainLayerKind, density: Float) -> Float {
+        guard density > 0.000_1 else {
+            return 0.0
+        }
+
+        let broadNoise = layerNoise(for: sample, layer: layer, seed: 17.0, scale: 0.85)
+        let breakupNoise = layerNoise(for: sample, layer: layer, seed: 43.0, scale: 2.1)
+        let grainNoise = layerNoise(for: sample, layer: layer, seed: 79.0, scale: 5.2)
+        let coverageNoise = simd_clamp(
+            broadNoise * 0.46 + breakupNoise * 0.36 + grainNoise * 0.18,
+            0.0,
+            1.0
+        )
+        let coverageThreshold = simd_clamp(
+            density * (0.72 + breakupNoise * 0.22 + grainNoise * 0.10),
+            0.0,
+            1.0
+        )
+
+        guard coverageNoise <= coverageThreshold else {
+            return 0.0
+        }
+
+        let opacityNoise = simd_clamp(
+            broadNoise * 0.18 + breakupNoise * 0.44 + grainNoise * 0.38,
+            0.0,
+            1.0
+        )
+        let edgeNoise = simd_clamp((coverageThreshold - coverageNoise) * 3.6 + grainNoise * 0.2, 0.0, 1.0)
+        let (minimumAlpha, range): (Float, Float)
+
+        switch layer {
+        case .ground:
+            return 1.0
+        case .understory:
+            (minimumAlpha, range) = (0.6, 0.3)
+        case .midstory:
+            (minimumAlpha, range) = (0.3, 0.3)
+        case .canopy:
+            (minimumAlpha, range) = (0.0, 0.3)
+        }
+
+        return simd_clamp(
+            minimumAlpha + opacityNoise * range * (0.58 + edgeNoise * 0.42),
+            minimumAlpha,
+            minimumAlpha + range
+        )
+    }
+
+    private func layerNoise(
+        for sample: JungleTerrainSample,
+        layer: TerrainLayerKind,
+        seed: Float,
+        scale: Float
+    ) -> Float {
+        let layerOffset: Float
+
+        switch layer {
+        case .ground:
+            layerOffset = 0.0
+        case .understory:
+            layerOffset = 11.0
+        case .midstory:
+            layerOffset = 23.0
+        case .canopy:
+            layerOffset = 37.0
+        }
+
+        let value =
+            sin(
+                Float(sample.position.x) * (0.173 * scale) + layerOffset * 0.31 + seed
+            ) +
+            sin(
+                Float(sample.position.z) * (0.197 * scale) +
+                    Float(sample.position.y) * (0.123 * scale) +
+                    layerOffset * 0.19 +
+                    seed * 1.7
+            ) +
+            sin(
+                Float(sample.position.x + sample.position.z) * (0.091 * scale) +
+                    layerOffset * 0.13 +
+                    seed * 0.7
+            ) +
+            sin(
+                Float(sample.position.x - sample.position.z) * (0.141 * scale) +
+                    Float(sample.position.y) * (0.087 * scale) +
+                    layerOffset * 0.11 +
+                    seed * 0.5
+            )
+
+        return simd_clamp(value * 0.18 + 0.5, 0.0, 1.0)
     }
 
     private func materialColor(_ channel: JungleMaterialChannel, wetness: Float) -> SIMD3<Float> {
