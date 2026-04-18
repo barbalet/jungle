@@ -1,0 +1,655 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		000000000000000000000064 /* JungleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000C8 /* JungleApp.swift */; };
+		000000000000000000000065 /* JungleEngineCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000C9 /* JungleEngineCoordinator.swift */; };
+		000000000000000000000066 /* JungleMetalViewport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000CA /* JungleMetalViewport.swift */; };
+		000000000000000000000067 /* JungleRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000CB /* JungleRootView.swift */; };
+		000000000000000000000068 /* JungleMetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000CC /* JungleMetalRenderer.swift */; };
+		000000000000000000000069 /* JungleRendererBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000CD /* JungleRendererBootstrap.swift */; };
+		00000000000000000000006A /* JungleFrameSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000CE /* JungleFrameSnapshot.swift */; };
+		00000000000000000000006B /* JungleLaunchConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000CF /* JungleLaunchConfiguration.swift */; };
+		00000000000000000000006C /* JungleRendererDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000D0 /* JungleRendererDiagnostics.swift */; };
+		00000000000000000000006D /* JungleRendererFrameMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000D1 /* JungleRendererFrameMetrics.swift */; };
+		00000000000000000000006E /* JungleTimingPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000D2 /* JungleTimingPlanner.swift */; };
+		00000000000000000000006F /* JungleTimingPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000D3 /* JungleTimingPolicy.swift */; };
+		000000000000000000000070 /* JungleTimingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000D4 /* JungleTimingState.swift */; };
+		000000000000000000000071 /* JungleVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000D5 /* JungleVector3.swift */; };
+		000000000000000000000072 /* jungle_camera.c in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000D6 /* jungle_camera.c */; };
+		000000000000000000000073 /* jungle_engine.c in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000D7 /* jungle_engine.c */; };
+		000000000000000000000074 /* jungle_math.c in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000D8 /* jungle_math.c */; };
+		000000000000000000000075 /* jungle_camera.h in Headers */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000D9 /* jungle_camera.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		000000000000000000000076 /* jungle_engine.h in Headers */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000DA /* jungle_engine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		000000000000000000000077 /* jungle_math.h in Headers */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000DB /* jungle_math.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		000000000000000000000078 /* libJungleRenderer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000B /* libJungleRenderer.a */; };
+		000000000000000000000079 /* libJungleShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000C /* libJungleShared.a */; };
+		00000000000000000000007A /* libJungleCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000D /* libJungleCore.a */; };
+		00000000000000000000007B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000E /* Metal.framework */; };
+		00000000000000000000007C /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000F /* MetalKit.framework */; };
+		00000000000000000000007D /* libJungleShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000C /* libJungleShared.a */; };
+		00000000000000000000007E /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000E /* Metal.framework */; };
+		00000000000000000000007F /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000F /* MetalKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0000000000000000000000E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000000000014;
+			remoteInfo = JungleRenderer;
+		};
+		0000000000000000000000E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000000000015;
+			remoteInfo = JungleShared;
+		};
+		0000000000000000000000E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000000000016;
+			remoteInfo = JungleCore;
+		};
+		0000000000000000000000E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000000000015;
+			remoteInfo = JungleShared;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00000000000000000000000A /* jungle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jungle.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		00000000000000000000000B /* libJungleRenderer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJungleRenderer.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		00000000000000000000000C /* libJungleShared.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJungleShared.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		00000000000000000000000D /* libJungleCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJungleCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		00000000000000000000000E /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		00000000000000000000000F /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		0000000000000000000000C8 /* JungleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungleApp.swift; sourceTree = "<group>"; };
+		0000000000000000000000C9 /* JungleEngineCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungleEngineCoordinator.swift; sourceTree = "<group>"; };
+		0000000000000000000000CA /* JungleMetalViewport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungleMetalViewport.swift; sourceTree = "<group>"; };
+		0000000000000000000000CB /* JungleRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungleRootView.swift; sourceTree = "<group>"; };
+		0000000000000000000000CC /* JungleMetalRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungleMetalRenderer.swift; sourceTree = "<group>"; };
+		0000000000000000000000CD /* JungleRendererBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungleRendererBootstrap.swift; sourceTree = "<group>"; };
+		0000000000000000000000CE /* JungleFrameSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungleFrameSnapshot.swift; sourceTree = "<group>"; };
+		0000000000000000000000CF /* JungleLaunchConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungleLaunchConfiguration.swift; sourceTree = "<group>"; };
+		0000000000000000000000D0 /* JungleRendererDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungleRendererDiagnostics.swift; sourceTree = "<group>"; };
+		0000000000000000000000D1 /* JungleRendererFrameMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungleRendererFrameMetrics.swift; sourceTree = "<group>"; };
+		0000000000000000000000D2 /* JungleTimingPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungleTimingPlanner.swift; sourceTree = "<group>"; };
+		0000000000000000000000D3 /* JungleTimingPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungleTimingPolicy.swift; sourceTree = "<group>"; };
+		0000000000000000000000D4 /* JungleTimingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungleTimingState.swift; sourceTree = "<group>"; };
+		0000000000000000000000D5 /* JungleVector3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungleVector3.swift; sourceTree = "<group>"; };
+		0000000000000000000000D6 /* jungle_camera.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = jungle_camera.c; sourceTree = "<group>"; };
+		0000000000000000000000D7 /* jungle_engine.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = jungle_engine.c; sourceTree = "<group>"; };
+		0000000000000000000000D8 /* jungle_math.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = jungle_math.c; sourceTree = "<group>"; };
+		0000000000000000000000D9 /* jungle_camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = jungle_camera.h; sourceTree = "<group>"; };
+		0000000000000000000000DA /* jungle_engine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = jungle_engine.h; sourceTree = "<group>"; };
+		0000000000000000000000DB /* jungle_math.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = jungle_math.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		000000000000000000000033 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000078 /* libJungleRenderer.a in Frameworks */,
+				000000000000000000000079 /* libJungleShared.a in Frameworks */,
+				00000000000000000000007A /* libJungleCore.a in Frameworks */,
+				00000000000000000000007B /* Metal.framework in Frameworks */,
+				00000000000000000000007C /* MetalKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000036 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00000000000000000000007D /* libJungleShared.a in Frameworks */,
+				00000000000000000000007E /* Metal.framework in Frameworks */,
+				00000000000000000000007F /* MetalKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000039 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		00000000000000000000003C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		000000000000000000000002 = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000004 /* Sources */,
+				000000000000000000000010 /* Frameworks */,
+				000000000000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		000000000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000000A /* jungle.app */,
+				00000000000000000000000B /* libJungleRenderer.a */,
+				00000000000000000000000C /* libJungleShared.a */,
+				00000000000000000000000D /* libJungleCore.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		000000000000000000000004 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000005 /* App */,
+				000000000000000000000006 /* Renderer */,
+				000000000000000000000007 /* Shared */,
+				000000000000000000000008 /* Core */,
+			);
+			path = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000005 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				0000000000000000000000C8 /* JungleApp.swift */,
+				0000000000000000000000C9 /* JungleEngineCoordinator.swift */,
+				0000000000000000000000CA /* JungleMetalViewport.swift */,
+				0000000000000000000000CB /* JungleRootView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		000000000000000000000006 /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				0000000000000000000000CC /* JungleMetalRenderer.swift */,
+				0000000000000000000000CD /* JungleRendererBootstrap.swift */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		000000000000000000000007 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				0000000000000000000000CE /* JungleFrameSnapshot.swift */,
+				0000000000000000000000CF /* JungleLaunchConfiguration.swift */,
+				0000000000000000000000D0 /* JungleRendererDiagnostics.swift */,
+				0000000000000000000000D1 /* JungleRendererFrameMetrics.swift */,
+				0000000000000000000000D2 /* JungleTimingPlanner.swift */,
+				0000000000000000000000D3 /* JungleTimingPolicy.swift */,
+				0000000000000000000000D4 /* JungleTimingState.swift */,
+				0000000000000000000000D5 /* JungleVector3.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		000000000000000000000008 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				0000000000000000000000D6 /* jungle_camera.c */,
+				0000000000000000000000D7 /* jungle_engine.c */,
+				0000000000000000000000D8 /* jungle_math.c */,
+				000000000000000000000009 /* include */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		000000000000000000000009 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				0000000000000000000000D9 /* jungle_camera.h */,
+				0000000000000000000000DA /* jungle_engine.h */,
+				0000000000000000000000DB /* jungle_math.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		000000000000000000000010 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000000E /* Metal.framework */,
+				00000000000000000000000F /* MetalKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		00000000000000000000003D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000075 /* jungle_camera.h in Headers */,
+				000000000000000000000076 /* jungle_engine.h in Headers */,
+				000000000000000000000077 /* jungle_math.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		000000000000000000000013 /* jungle */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00000000000000000000001E /* Build configuration list for PBXNativeTarget "jungle" */;
+			buildPhases = (
+				000000000000000000000032 /* Sources */,
+				000000000000000000000033 /* Frameworks */,
+				000000000000000000000034 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0000000000000000000000EA /* PBXTargetDependency */,
+				0000000000000000000000EB /* PBXTargetDependency */,
+				0000000000000000000000EC /* PBXTargetDependency */,
+			);
+			name = jungle;
+			productName = jungle;
+			productReference = 00000000000000000000000A /* jungle.app */;
+			productType = "com.apple.product-type.application";
+		};
+		000000000000000000000014 /* JungleRenderer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000021 /* Build configuration list for PBXNativeTarget "JungleRenderer" */;
+			buildPhases = (
+				000000000000000000000035 /* Sources */,
+				000000000000000000000036 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0000000000000000000000ED /* PBXTargetDependency */,
+			);
+			name = JungleRenderer;
+			productName = JungleRenderer;
+			productReference = 00000000000000000000000B /* libJungleRenderer.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		000000000000000000000015 /* JungleShared */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000024 /* Build configuration list for PBXNativeTarget "JungleShared" */;
+			buildPhases = (
+				000000000000000000000037 /* Sources */,
+				000000000000000000000039 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JungleShared;
+			productName = JungleShared;
+			productReference = 00000000000000000000000C /* libJungleShared.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		000000000000000000000016 /* JungleCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000027 /* Build configuration list for PBXNativeTarget "JungleCore" */;
+			buildPhases = (
+				00000000000000000000003D /* Headers */,
+				00000000000000000000003A /* Sources */,
+				00000000000000000000003C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JungleCore;
+			productName = JungleCore;
+			productReference = 00000000000000000000000D /* libJungleCore.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		000000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2630;
+				LastUpgradeCheck = 2630;
+				TargetAttributes = {
+					000000000000000000000013 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					000000000000000000000014 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					000000000000000000000015 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					000000000000000000000016 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+				};
+			};
+			buildConfigurationList = 00000000000000000000001B /* Build configuration list for PBXProject "jungle" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 000000000000000000000002;
+			productRefGroup = 000000000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				000000000000000000000013 /* jungle */,
+				000000000000000000000014 /* JungleRenderer */,
+				000000000000000000000015 /* JungleShared */,
+				000000000000000000000016 /* JungleCore */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		000000000000000000000034 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		000000000000000000000032 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000064 /* JungleApp.swift in Sources */,
+				000000000000000000000065 /* JungleEngineCoordinator.swift in Sources */,
+				000000000000000000000066 /* JungleMetalViewport.swift in Sources */,
+				000000000000000000000067 /* JungleRootView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000035 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000068 /* JungleMetalRenderer.swift in Sources */,
+				000000000000000000000069 /* JungleRendererBootstrap.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000037 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00000000000000000000006A /* JungleFrameSnapshot.swift in Sources */,
+				00000000000000000000006B /* JungleLaunchConfiguration.swift in Sources */,
+				00000000000000000000006C /* JungleRendererDiagnostics.swift in Sources */,
+				00000000000000000000006D /* JungleRendererFrameMetrics.swift in Sources */,
+				00000000000000000000006E /* JungleTimingPlanner.swift in Sources */,
+				00000000000000000000006F /* JungleTimingPolicy.swift in Sources */,
+				000000000000000000000070 /* JungleTimingState.swift in Sources */,
+				000000000000000000000071 /* JungleVector3.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		00000000000000000000003A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000072 /* jungle_camera.c in Sources */,
+				000000000000000000000073 /* jungle_engine.c in Sources */,
+				000000000000000000000074 /* jungle_math.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0000000000000000000000EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 000000000000000000000014 /* JungleRenderer */;
+			targetProxy = 0000000000000000000000E6 /* PBXContainerItemProxy */;
+		};
+		0000000000000000000000EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 000000000000000000000015 /* JungleShared */;
+			targetProxy = 0000000000000000000000E7 /* PBXContainerItemProxy */;
+		};
+		0000000000000000000000EC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 000000000000000000000016 /* JungleCore */;
+			targetProxy = 0000000000000000000000E8 /* PBXContainerItemProxy */;
+		};
+		0000000000000000000000ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 000000000000000000000015 /* JungleShared */;
+			targetProxy = 0000000000000000000000E9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		00000000000000000000001C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		00000000000000000000001D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		00000000000000000000001F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = jungle;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.barbalet.jungle;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INCLUDE_PATHS = (
+					"$(inherited)",
+					"$(BUILT_PRODUCTS_DIR)",
+					"$(BUILT_PRODUCTS_DIR)/include",
+					"$(SRCROOT)/Sources/Core/include",
+				);
+			};
+			name = Debug;
+		};
+		000000000000000000000020 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = jungle;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.barbalet.jungle;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INCLUDE_PATHS = (
+					"$(inherited)",
+					"$(BUILT_PRODUCTS_DIR)",
+					"$(BUILT_PRODUCTS_DIR)/include",
+					"$(SRCROOT)/Sources/Core/include",
+				);
+			};
+			name = Release;
+		};
+		000000000000000000000022 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				MACH_O_TYPE = staticlib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = (
+					"$(inherited)",
+					"$(BUILT_PRODUCTS_DIR)",
+				);
+			};
+			name = Debug;
+		};
+		000000000000000000000023 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				MACH_O_TYPE = staticlib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = (
+					"$(inherited)",
+					"$(BUILT_PRODUCTS_DIR)",
+				);
+			};
+			name = Release;
+		};
+		000000000000000000000025 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				MACH_O_TYPE = staticlib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		000000000000000000000026 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				MACH_O_TYPE = staticlib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		000000000000000000000028 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_C_LANGUAGE_STANDARD = c17;
+				DEFINES_MODULE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/Sources/Core/include",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "$(SRCROOT)/Sources/Core/include/module.modulemap";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PRODUCT_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		000000000000000000000029 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_C_LANGUAGE_STANDARD = c17;
+				DEFINES_MODULE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/Sources/Core/include",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "$(SRCROOT)/Sources/Core/include/module.modulemap";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PRODUCT_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		00000000000000000000001B /* Build configuration list for PBXProject "jungle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00000000000000000000001C /* Debug */,
+				00000000000000000000001D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		00000000000000000000001E /* Build configuration list for PBXNativeTarget "jungle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00000000000000000000001F /* Debug */,
+				000000000000000000000020 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		000000000000000000000021 /* Build configuration list for PBXNativeTarget "JungleRenderer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000022 /* Debug */,
+				000000000000000000000023 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		000000000000000000000024 /* Build configuration list for PBXNativeTarget "JungleShared" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000025 /* Debug */,
+				000000000000000000000026 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		000000000000000000000027 /* Build configuration list for PBXNativeTarget "JungleCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000028 /* Debug */,
+				000000000000000000000029 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 000000000000000000000001 /* Project object */;
+}

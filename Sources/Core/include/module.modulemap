@@ -1,0 +1,6 @@
+module JungleCore {
+    header "jungle_camera.h"
+    header "jungle_engine.h"
+    header "jungle_math.h"
+    export *
+}
