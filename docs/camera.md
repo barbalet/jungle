@@ -24,4 +24,4 @@ Cycle 7 adds the first-person camera model, movement controls and projection set
 
 ## Next step
 
-Cycle 8 should define the world scale, unit system and coordinate conventions that this camera moves through.
+Cycle 19 should extend this first-person traversal across the beach edge and into the first shallow-water prototype.

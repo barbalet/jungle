@@ -28,4 +28,4 @@ The repo now has two supported Xcode entry points:
 
 ## Next step
 
-Open `jungle.xcodeproj` in Xcode when you want a native run target for macOS, or use `swift build` / `swift test` when you want the package workflow.
+Open `jungle.xcodeproj` in Xcode when you want a native run target for macOS, or use `swift build` / `swift test` when you want the package workflow. The next planned terrain-facing cycle is cycle 19, which adds the first shallow-water prototype to the new beach shoreline.

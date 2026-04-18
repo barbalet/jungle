@@ -27,4 +27,4 @@ Cycle 5 defines the timing and frame pacing policy for the current scaffold.
 
 ## Next step
 
-Cycle 8 should define the world-space conventions that the fixed-step camera movement will operate within.
+Cycle 19 should carry this fixed-step traversal into the shallow-water prototype without widening the timing boundary.

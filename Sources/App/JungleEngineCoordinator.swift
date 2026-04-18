@@ -1,4 +1,3 @@
-import Combine
 import Foundation
 import JungleCore
 import JungleRenderer
@@ -149,6 +148,8 @@ final class JungleEngineCoordinator: ObservableObject {
         var config = jungle_engine_config()
         config.seed = configuration.seed
         config.initial_camera_height = configuration.initialCameraHeight
+        config.graphics_quality = configuration.graphicsQuality.rawValue
+        config.initial_biome = configuration.startingBiome.rawValue
 
         engineHandle = JungleEngineHandle(pointer: jungle_engine_create(&config))
         simulationLoopHandle = SimulationLoopHandle()
@@ -254,35 +255,167 @@ final class JungleEngineCoordinator: ObservableObject {
     }
 
     private func refreshSnapshot(using engine: OpaquePointer) {
-        var snapshot = jungle_frame_snapshot()
-        jungle_engine_snapshot_copy(engine, &snapshot)
+        var rawSnapshot = jungle_frame_snapshot()
+        jungle_engine_snapshot_copy(engine, &rawSnapshot)
 
         engineSnapshot = JungleFrameSnapshot(
-            engineFrameIndex: snapshot.frame_index,
-            cameraHeight: snapshot.camera_height,
+            engineFrameIndex: rawSnapshot.frame_index,
+            cameraHeight: rawSnapshot.camera_height,
+            cameraFloorHeight: rawSnapshot.camera_floor_height,
             cameraPosition: JungleVector3(
-                x: snapshot.camera_position.x,
-                y: snapshot.camera_position.y,
-                z: snapshot.camera_position.z
+                x: rawSnapshot.camera_position.x,
+                y: rawSnapshot.camera_position.y,
+                z: rawSnapshot.camera_position.z
             ),
             cameraForward: JungleVector3(
-                x: snapshot.camera_forward.x,
-                y: snapshot.camera_forward.y,
-                z: snapshot.camera_forward.z
+                x: rawSnapshot.camera_forward.x,
+                y: rawSnapshot.camera_forward.y,
+                z: rawSnapshot.camera_forward.z
             ),
             cameraRight: JungleVector3(
-                x: snapshot.camera_right.x,
-                y: snapshot.camera_right.y,
-                z: snapshot.camera_right.z
+                x: rawSnapshot.camera_right.x,
+                y: rawSnapshot.camera_right.y,
+                z: rawSnapshot.camera_right.z
             ),
-            cameraYawRadians: snapshot.camera_yaw_radians,
-            cameraPitchRadians: snapshot.camera_pitch_radians,
-            cameraAspectRatio: snapshot.camera_aspect_ratio,
-            verticalFieldOfViewRadians: snapshot.vertical_field_of_view_radians,
-            simulatedTimeSeconds: snapshot.simulated_time_seconds,
-            lastStepSeconds: snapshot.last_delta_seconds,
-            rendererReady: snapshot.renderer_ready
+            cameraYawRadians: rawSnapshot.camera_yaw_radians,
+            cameraPitchRadians: rawSnapshot.camera_pitch_radians,
+            cameraAspectRatio: rawSnapshot.camera_aspect_ratio,
+            verticalFieldOfViewRadians: rawSnapshot.vertical_field_of_view_radians,
+            simulatedTimeSeconds: rawSnapshot.simulated_time_seconds,
+            lastStepSeconds: rawSnapshot.last_delta_seconds,
+            rendererReady: rawSnapshot.renderer_ready,
+            currentBiome: JungleBiomeKind(cValue: rawSnapshot.biome_kind),
+            currentWeather: JungleWeatherKind(cValue: rawSnapshot.weather_kind),
+            biomeBlend: rawSnapshot.biome_blend,
+            worldUnitsPerMeter: rawSnapshot.world_units_per_meter,
+            eyeHeightUnits: rawSnapshot.eye_height_units,
+            groundCoverHeight: rawSnapshot.ground_cover_height,
+            waistHeight: rawSnapshot.waist_height,
+            headHeight: rawSnapshot.head_height,
+            canopyHeight: rawSnapshot.canopy_height,
+            visibilityDistance: rawSnapshot.visibility_distance,
+            ambientWetness: rawSnapshot.ambient_wetness,
+            shorelineSpace: rawSnapshot.shoreline_space,
+            terrainPatch: Self.makeTerrainPatch(from: rawSnapshot),
+            groundMaterial: Self.makeMaterialChannel(rawSnapshot.ground_material),
+            groundCoverMaterial: Self.makeMaterialChannel(rawSnapshot.ground_cover_material),
+            waistMaterial: Self.makeMaterialChannel(rawSnapshot.waist_material),
+            headMaterial: Self.makeMaterialChannel(rawSnapshot.head_material),
+            canopyMaterial: Self.makeMaterialChannel(rawSnapshot.canopy_material),
+            viewMatrix: Self.makeMatrix(from: rawSnapshot.view_matrix),
+            projectionMatrix: Self.makeMatrix(from: rawSnapshot.projection_matrix)
         )
+    }
+
+    private static func makeMaterialChannel(_ rawChannel: jungle_material_channel) -> JungleMaterialChannel {
+        JungleMaterialChannel(
+            red: rawChannel.red,
+            green: rawChannel.green,
+            blue: rawChannel.blue,
+            alpha: rawChannel.alpha,
+            motion: rawChannel.motion,
+            wetnessResponse: rawChannel.wetness_response
+        )
+    }
+
+    private static func makeMatrix(from rawMatrix: jungle_mat4) -> JungleMatrix4x4 {
+        let elements = copyArray(
+            from: rawMatrix,
+            count: 16,
+            as: Double.self
+        ).map(Float.init)
+
+        return JungleMatrix4x4(elements: elements)
+    }
+
+    private static func makeTerrainPatch(from rawSnapshot: jungle_frame_snapshot) -> JungleTerrainPatch {
+        let sampleSide = Int(rawSnapshot.terrain_patch_side)
+        let sampleCount = sampleSide * sampleSide
+
+        guard sampleSide > 0, sampleCount > 0 else {
+            return .empty
+        }
+
+        let heights = copyArray(
+            from: rawSnapshot.terrain_heights,
+            count: sampleCount,
+            as: Double.self
+        )
+        let groundCover = copyArray(
+            from: rawSnapshot.terrain_ground_cover,
+            count: sampleCount,
+            as: Float.self
+        )
+        let waist = copyArray(
+            from: rawSnapshot.terrain_waist,
+            count: sampleCount,
+            as: Float.self
+        )
+        let head = copyArray(
+            from: rawSnapshot.terrain_head,
+            count: sampleCount,
+            as: Float.self
+        )
+        let canopy = copyArray(
+            from: rawSnapshot.terrain_canopy,
+            count: sampleCount,
+            as: Float.self
+        )
+        let wetness = copyArray(
+            from: rawSnapshot.terrain_wetness,
+            count: sampleCount,
+            as: Float.self
+        )
+
+        let patchHalfExtent = (Double(sampleSide) - 1.0) * 0.5 * rawSnapshot.terrain_patch_spacing
+        var samples: [JungleTerrainSample] = []
+        samples.reserveCapacity(sampleCount)
+
+        for row in 0..<sampleSide {
+            for column in 0..<sampleSide {
+                let index = row * sampleSide + column
+                let worldX = rawSnapshot.terrain_patch_center_x - patchHalfExtent +
+                    Double(column) * rawSnapshot.terrain_patch_spacing
+                let worldZ = rawSnapshot.terrain_patch_center_z - patchHalfExtent +
+                    Double(row) * rawSnapshot.terrain_patch_spacing
+
+                samples.append(
+                    JungleTerrainSample(
+                        position: JungleVector3(
+                            x: worldX,
+                            y: heights[index],
+                            z: worldZ
+                        ),
+                        groundCover: groundCover[index],
+                        waist: waist[index],
+                        head: head[index],
+                        canopy: canopy[index],
+                        wetness: wetness[index]
+                    )
+                )
+            }
+        }
+
+        return JungleTerrainPatch(
+            sampleSide: sampleSide,
+            spacing: rawSnapshot.terrain_patch_spacing,
+            center: JungleVector3(
+                x: rawSnapshot.terrain_patch_center_x,
+                y: 0,
+                z: rawSnapshot.terrain_patch_center_z
+            ),
+            samples: samples
+        )
+    }
+
+    private static func copyArray<Element, Storage>(
+        from storage: Storage,
+        count: Int,
+        as elementType: Element.Type
+    ) -> [Element] {
+        withUnsafeBytes(of: storage) { rawBuffer in
+            Array(rawBuffer.bindMemory(to: elementType).prefix(count))
+        }
     }
 
     private static func seconds(from duration: Duration) -> Double {

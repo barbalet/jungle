@@ -157,4 +157,4 @@ These rules are the quickest way to catch architectural drift.
 
 ## Next cycle
 
-Cycle 8 should define the world scale, unit system and coordinate conventions for the environments the camera traverses.
+Cycle 19 should add the first shallow-water prototype on top of the current grassland, jungle, and beach terrain foundation.

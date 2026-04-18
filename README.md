@@ -18,7 +18,7 @@ Jungle first person perspective for the Mac. It is written with METAL, SwiftUI a
 
 This README also includes the current cycle information for ease of review:
 
-7
+18
 
 It is imagined that rather than hard surfaces, the engine is made with sinusoidal output of three or four alpha plains that undulate to simulate ground-cover, waist height plants, head height plants and high plants represented like fern fonds cutting out the light.
 
@@ -28,7 +28,7 @@ Adding to the engine requirements the characters that move through the environme
 
 ## Development cycles
 
-Current cycle output: the engine now exposes a first-person camera model and control path through [Sources/Core/include/jungle_camera.h](Sources/Core/include/jungle_camera.h), [Sources/Core/jungle_camera.c](Sources/Core/jungle_camera.c), and the interactive viewport in [Sources/App/JungleMetalViewport.swift](Sources/App/JungleMetalViewport.swift). The behavior is summarized in [docs/camera.md](docs/camera.md).
+Current cycle output: cycles 8 through 18 now define the world scale, launch configuration, detached debug panels, seeded terrain mesh, layered material channels, terrain-aware camera collision, and the first grassland, jungle, and beach biome prototypes with shoreline-space metrics and coastal haze. The behavior is summarized in [docs/world.md](docs/world.md).
 
 ### Cycles 1-25: Foundation and first demo
 

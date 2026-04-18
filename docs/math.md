@@ -24,4 +24,4 @@ Cycle 6 adds the first reusable C math layer for the engine core.
 
 ## Next step
 
-Cycle 8 should define world units and coordinate conventions on top of this math layer.
+Cycle 19 should reuse this math layer for the first shallow-water surface and shoreline transition work.
