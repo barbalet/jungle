@@ -630,29 +630,38 @@ public final class JungleMetalRenderer: NSObject, MTKViewDelegate {
         }
 
         let broadNoise = layerNoise(for: sample, layer: layer, seed: 17.0, scale: 0.85)
-        let breakupNoise = layerNoise(for: sample, layer: layer, seed: 43.0, scale: 2.1)
-        let grainNoise = layerNoise(for: sample, layer: layer, seed: 79.0, scale: 5.2)
+        let breakupNoise = layerNoise(for: sample, layer: layer, seed: 43.0, scale: 2.4)
+        let grainNoise = layerNoise(for: sample, layer: layer, seed: 79.0, scale: 6.4)
+        let microNoise = layerNoise(for: sample, layer: layer, seed: 131.0, scale: 12.0)
         let coverageNoise = simd_clamp(
-            broadNoise * 0.46 + breakupNoise * 0.36 + grainNoise * 0.18,
+            broadNoise * 0.28 + breakupNoise * 0.30 + grainNoise * 0.24 + microNoise * 0.18,
             0.0,
             1.0
         )
         let coverageThreshold = simd_clamp(
-            density * (0.72 + breakupNoise * 0.22 + grainNoise * 0.10),
+            density * (0.58 + breakupNoise * 0.18 + grainNoise * 0.12 + microNoise * 0.10),
             0.0,
             1.0
         )
+        let breakupBoost = simd_clamp(abs(grainNoise - microNoise) * 1.3, 0.0, 1.0)
 
-        guard coverageNoise <= coverageThreshold else {
+        guard coverageNoise <= coverageThreshold * (0.90 + breakupBoost * 0.10) else {
             return 0.0
         }
 
         let opacityNoise = simd_clamp(
-            broadNoise * 0.18 + breakupNoise * 0.44 + grainNoise * 0.38,
+            broadNoise * 0.08 + breakupNoise * 0.28 + grainNoise * 0.34 + microNoise * 0.30,
             0.0,
             1.0
         )
-        let edgeNoise = simd_clamp((coverageThreshold - coverageNoise) * 3.6 + grainNoise * 0.2, 0.0, 1.0)
+        let edgeNoise = simd_clamp(
+            (coverageThreshold - coverageNoise) * 4.2 +
+                grainNoise * 0.16 +
+                microNoise * 0.24 +
+                breakupBoost * 0.18,
+            0.0,
+            1.0
+        )
         let (minimumAlpha, range): (Float, Float)
 
         switch layer {
